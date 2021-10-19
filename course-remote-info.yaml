@@ -7,7 +7,7 @@ update_date: Tue, 19 Oct 2021 10:11:09 UTC
 stages:
 - id: 680
   step: 10888
-  is_completed: false
+  is_completed: true
 - id: 681
   step: 10889
   is_completed: false
