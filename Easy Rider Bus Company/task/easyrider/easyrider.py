@@ -41,7 +41,16 @@ def validate_data(data):
     print(f"a_time: {a_time_errors}")
 
 
+# Stage 2/6: Correct syntax
+# For exercise description see "Correct syntax/task.html"
+def validate_format(data):
+    stop_name_errors = 0
+    stop_type_errors = 0
+    a_time_errors = 0
+
+
 if __name__ == '__main__':
     json_string = input()
     stop_data = json.loads(json_string)
-    validate_data(stop_data)
+    # validate_data(stop_data)
+    validate_format(stop_data)
