@@ -96,5 +96,8 @@ files:
         EasyRiderStage2('easyrider.easyrider').run_tests()
   learner_created: false
 feedback_link: https://hyperskill.org/projects/128/stages/681/implement#comment
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Wed, 20 Oct 2021 22:43:29 UTC
 record: -1

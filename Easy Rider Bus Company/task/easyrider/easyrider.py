@@ -1,4 +1,5 @@
 import json
+import re
 
 # Stage 1/6: Checking the data type
 # For exercise description see "Checking the data type/task.html"
@@ -47,6 +48,23 @@ def validate_format(data):
     stop_name_errors = 0
     stop_type_errors = 0
     a_time_errors = 0
+
+    stop_name_pattern = re.compile(r"^([A-Z][a-z]*\s?)+ (Road|Avenue|Boulevard|Street)$")
+    stop_type_pattern = re.compile("^[SOF]?$")
+    a_time_pattern = re.compile(r"^([01]\d|[2][0-3]):([0-5]\d)$")
+
+    for stop in data:
+        if not stop_name_pattern.match(stop["stop_name"]):
+            stop_name_errors += 1
+        if not stop_type_pattern.match(stop["stop_type"]):
+            stop_type_errors += 1
+        if not a_time_pattern.match(stop["a_time"]):
+            a_time_errors += 1
+
+    print("Format validation: {} errors".format(stop_type_errors + stop_name_errors + a_time_errors))
+    print(f"stop_name: {stop_name_errors}")
+    print(f"stop_type: {stop_type_errors}")
+    print(f"a_time: {a_time_errors}")
 
 
 if __name__ == '__main__':
