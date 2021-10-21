@@ -69,9 +69,20 @@ def validate_format(data):
 
 # stage 3/6: Bus line info
 # For exercise description see "Bus line info/task.html"
+def count_line_stops(data):
+    lines = dict()
+    for stop in data:
+        lines[stop["bus_id"]] = lines.get(stop["bus_id"], 0) + 1
+
+    for key in sorted(lines.keys()):
+        print(f"bus_id: {key}, stops: {lines[key]}")
+
 
 if __name__ == '__main__':
     json_string = input()
     stop_data = json.loads(json_string)
+    # stage 1 method
     # validate_data(stop_data)
-    validate_format(stop_data)
+    # stage 2 method
+    # validate_format(stop_data)
+    count_line_stops(stop_data)

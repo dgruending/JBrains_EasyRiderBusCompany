@@ -68,6 +68,12 @@ files:
     if __name__ == '__main__':
         EasyRiderStage3('easyrider.easyrider').run_tests()
   learner_created: false
+- name: easyrider/json_data.txt
+  visible: true
+  learner_created: true
 feedback_link: https://hyperskill.org/projects/128/stages/682/implement#comment
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Thu, 21 Oct 2021 08:10:34 UTC
 record: -1
