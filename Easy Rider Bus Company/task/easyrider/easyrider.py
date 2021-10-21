@@ -78,11 +78,24 @@ def count_line_stops(data):
         print(f"bus_id: {key}, stops: {lines[key]}")
 
 
+# stage 4/6: Special stops
+def validate_count_stops(data):
+    for stop in data:
+        pass
+
+
 if __name__ == '__main__':
     json_string = input()
     stop_data = json.loads(json_string)
+
     # stage 1 method
     # validate_data(stop_data)
+
     # stage 2 method
     # validate_format(stop_data)
-    count_line_stops(stop_data)
+
+    # stage 3 method
+    # count_line_stops(stop_data)
+
+    # stage 4 method
+    validate_count_stops()
