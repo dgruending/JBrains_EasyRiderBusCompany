@@ -125,7 +125,43 @@ def validate_count_stops(data):
 # stage 4/6: Unlost in time
 # For exercise description see "Unlost in time/task.html"
 def validate_a_time(data):
-    pass
+    lines = dict()
+    stops = dict()
+
+    # congregate information
+    for stop in data:
+        # store id -> name relation of stops
+        if stop["stop_id"] not in stops.keys():
+            stops[stop["stop_id"]] = (stop["stop_name"], dict())
+        # store (arrival time, stop type, next stop) of each bus line at each stop
+        stops[stop["stop_id"]][1][stop["bus_id"]] = (stop["a_time"], stop["stop_type"], stop["next_stop"])
+        # store start points for each bus line
+        if stop["stop_type"] == "S":
+            lines[stop["bus_id"]] = stop["stop_id"]
+
+    print("Arrival time test:")
+    error = False
+    for line in sorted(lines.keys()):
+        stop_id = lines[line]
+        last_a_time = None
+        while True:
+            stop = stops[stop_id][1][line]
+            # check time
+            if last_a_time is None:
+                last_a_time = stop[0]
+            elif last_a_time >= stop[0]:
+                print(f"bus_id line {line}: wrong time on station {stops[stop_id][0]}")
+                error = True
+                break
+
+            # update data for next iteration
+            if stop[1] == "F":
+                break
+            last_a_time = stop[0]
+            stop_id = stop[2]
+
+    if not error:
+        print("OK")
 
 
 if __name__ == '__main__':
