@@ -79,9 +79,47 @@ def count_line_stops(data):
 
 
 # stage 4/6: Special stops
+# For exercise description see "Special stops/task.html"
 def validate_count_stops(data):
+    start_stops = set()
+    transfer_stops = set()
+    finish_stops = set()
+    lines = dict()
+
+    # Gather stops by their stop types
     for stop in data:
-        pass
+        stop_type = stop["stop_type"]
+        bus_id = stop["bus_id"]
+        if stop_type in ["S", "F"]:
+            # Make sure there are no two start or end points for each end line
+            if stop_type in lines.get(bus_id, (set(), set()))[0]:
+                print(f"There are two start or end stops for the line: {bus_id}.")
+                return
+            else:
+                lines[bus_id] = lines.get(bus_id, (set(), set()))
+                lines[bus_id][0].add(stop_type)
+                if stop_type == "S":
+                    start_stops.add(stop["stop_name"])
+                else:
+                    finish_stops.add(stop["stop_name"])
+        else:
+            # in case of bus lines with only non end stops
+            if bus_id not in lines.keys():
+                lines[bus_id] = (set(), set())
+        lines[bus_id][1].add(stop["stop_name"])
+
+    # check if each bus line has a start and end point
+    for line, (endpoints, stops) in lines.items():
+        if len(endpoints) != 2:
+            print(f"There is no start or end stop for the line: {line}.")
+            return
+        for bus_id in lines.keys():
+            if bus_id != line:
+                transfer_stops |= (stops & lines[bus_id][1])
+
+    print("Start stops: {0} {1}".format(len(start_stops), sorted(start_stops)))
+    print("Transfer stops: {0} {1}".format(len(transfer_stops), sorted(transfer_stops)))
+    print("Finish stops: {0} {1}".format(len(finish_stops), sorted(finish_stops)))
 
 
 if __name__ == '__main__':
@@ -98,4 +136,4 @@ if __name__ == '__main__':
     # count_line_stops(stop_data)
 
     # stage 4 method
-    validate_count_stops()
+    validate_count_stops(stop_data)
