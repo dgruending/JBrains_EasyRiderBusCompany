@@ -122,6 +122,12 @@ def validate_count_stops(data):
     print("Finish stops: {0} {1}".format(len(finish_stops), sorted(finish_stops)))
 
 
+# stage 4/6: Unlost in time
+# For exercise description see "Unlost in time/task.html"
+def validate_a_time(data):
+    pass
+
+
 if __name__ == '__main__':
     json_string = input()
     stop_data = json.loads(json_string)
@@ -136,4 +142,7 @@ if __name__ == '__main__':
     # count_line_stops(stop_data)
 
     # stage 4 method
-    validate_count_stops(stop_data)
+    # validate_count_stops(stop_data)
+
+    # stage 5 method
+    validate_a_time(stop_data)
