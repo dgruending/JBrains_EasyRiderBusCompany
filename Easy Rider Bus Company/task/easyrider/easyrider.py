@@ -67,6 +67,9 @@ def validate_format(data):
     print(f"a_time: {a_time_errors}")
 
 
+# stage 3/6: Bus line info
+# For exercise description see "Bus line info/task.html"
+
 if __name__ == '__main__':
     json_string = input()
     stop_data = json.loads(json_string)
