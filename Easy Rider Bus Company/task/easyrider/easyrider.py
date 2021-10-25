@@ -167,27 +167,63 @@ def validate_a_time(data):
 # stage 6/6: On-demand
 # For exercise description see "On-demand/task.html"
 def check_on_demand(data):
-    pass
+    print("On demand stops test:")
+    on_demand = set()
+    start = set()
+    end = set()
+    transfer = set()
+    lines = dict()
+
+    # get data
+    for stop in data:
+        if stop["stop_type"] == "S":
+            start.add((stop["stop_id"], stop["stop_name"]))
+            lines[stop["bus_id"]] = lines.get(stop["bus_id"], set()) | {(stop["stop_id"], stop["stop_name"])}
+        elif stop["stop_type"] == "S":
+            end.add((stop["stop_id"], stop["stop_name"]))
+            lines[stop["bus_id"]] = lines.get(stop["bus_id"], set()) | {(stop["stop_id"], stop["stop_name"])}
+        elif stop["stop_type"] == "O":
+            on_demand.add((stop["stop_id"], stop["stop_name"]))
+            lines[stop["bus_id"]] = lines.get(stop["bus_id"], set()) | {(stop["stop_id"], stop["stop_name"])}
+        else:
+            lines[stop["bus_id"]] = lines.get(stop["bus_id"], set()) | {(stop["stop_id"], stop["stop_name"])}
+
+    # get transfer stops
+    for line, stop in lines.items():
+        for bus_id in lines.keys():
+            if bus_id != line:
+                transfer |= (stop & lines[bus_id])
+
+    # get wrong stops
+    wrong_stops = []
+    for stop in on_demand:
+        if stop in (start | end | transfer):
+            wrong_stops.append(stop[1])
+
+    if len(wrong_stops) == 0:
+        print("OK")
+    else:
+        print("Wrong stop type:", wrong_stops)
 
 
 if __name__ == '__main__':
     json_string = input()
     stop_data = json.loads(json_string)
 
-    # stage 1 method
+    # stage 1 function
     # validate_data(stop_data)
 
-    # stage 2 method
+    # stage 2 function
     # validate_format(stop_data)
 
-    # stage 3 method
+    # stage 3 function
     # count_line_stops(stop_data)
 
-    # stage 4 method
+    # stage 4 function
     # validate_count_stops(stop_data)
 
-    # stage 5 method
+    # stage 5 function
     # validate_a_time(stop_data)
 
-    # stage 6 method
+    # stage 6 function
     check_on_demand(stop_data)
